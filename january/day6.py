@@ -9,6 +9,31 @@ class ListNode:
 
 class Solution:
     def deleteDuplicates(self, head: ListNode) -> ListNode:
+        p = head
+        q = None
+        new_head = curr = ListNode(val=0)
+        list_dict = defaultdict(list)
+        seen = set()
+        while p:
+            if q:
+                if p.val != q.val:
+                    q.next = None
+                    curr.next = q
+                    curr = curr.next
+            if p.val not in seen:
+                seen.add(p.val)
+                q = p
+                p = p.next
+            else:
+                q = None
+                p = p.next
+        if q:
+            q.next = None
+            curr.next = q
+
+        return new_head
+
+    def deleteDuplicates2(self, head: ListNode) -> ListNode:
         q = head
         list_dict = defaultdict(list)
         while q:
@@ -29,7 +54,7 @@ class Solution:
 
 def main():
     s = Solution()
-    nums = [1,2,2]
+    nums = [2, 2, 3, 4, 4, 5]
     l = None
     head = None
     for i in nums:
